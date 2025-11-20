@@ -51,11 +51,12 @@ var userRole = Context.Session.GetString("UserRole");
         }
 
         <!-- HR Dashboard -->
-       
+       @if (userRole == "HR")
+        {
             <form asp-controller="HR" asp-action="HRDashboard" method="get" class="dashboard-btn-form">
                 <button type="submit" class="dashboard-btn">HR Dashboard</button>
             </form>
-        
+        }
     </div>
 </div>
 

@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg p-4 text-center" style="max-width: 500px; width: 100%; border-radius: 12px;">
+
+        <img src="~/images/lock.png" style="height: 80px; margin-bottom: 20px;" alt="Access Denied Icon" />
+
+        <h2 class="text-danger mb-3">Access Denied</h2>
+
+        <p class="text-muted">
+            You do not have permission to access this page.<br />
+            Please contact your system administrator if you believe this is an error.
+        </p>
+
+        <a href="~/HomePage/Index" class="btn btn-primary mt-3 px-4">
+            Return to Home
+        </a>
+
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #eef2f3, #ffffff);
+        background-size: cover;
+    }
+</style>
+

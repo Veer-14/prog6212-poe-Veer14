@@ -70,6 +70,9 @@ namespace PROG6212_POE.Controllers
                     case UserRole.Manager:
                         return RedirectToAction("ManagerDashboard", "Manager");
 
+                    case UserRole.HR:
+                        return RedirectToAction("HRDashboard", "HR");
+
                     default:
                         TempData["Error"] = "ERROR 103: Unknown user role.";
                         return RedirectToAction("Login");
