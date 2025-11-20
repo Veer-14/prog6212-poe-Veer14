@@ -21,7 +21,6 @@ namespace PROG6212_POE.Controllers
             _env = env;
         }
 
-        // Role check helper
         private IActionResult CheckRole()
         {
             int? userId = HttpContext.Session.GetInt32("UserID");
@@ -33,10 +32,9 @@ namespace PROG6212_POE.Controllers
             if (role != "Lecturer")
                 return RedirectToAction("AccessDenied", "Account");
 
-            return null; // role valid
+            return null;
         }
 
-        // Lecturer Dashboard
         public async Task<IActionResult> LecturerDashboard()
         {
             var roleCheck = CheckRole();
@@ -53,7 +51,6 @@ namespace PROG6212_POE.Controllers
             return View(claims);
         }
 
-        // Show New Claim form
         public async Task<IActionResult> NewClaim()
         {
             var roleCheck = CheckRole();
@@ -81,25 +78,29 @@ namespace PROG6212_POE.Controllers
             int userId = HttpContext.Session.GetInt32("UserID").Value;
             var user = await _context.Users.FindAsync(userId);
 
+            // fill the missing fields
             claim.UserID = user.UserID;
             claim.HourlyRate = user.HourlyRate;
             claim.Status = ClaimStatus.Pending;
             claim.DateSubmitted = DateTime.Now;
 
+            // HOURS VALIDATION
             if (claim.HoursWorked > 180)
             {
                 ModelState.AddModelError("HoursWorked", "You cannot submit more than 180 hours.");
                 return View(claim);
             }
 
+            // TOTAL AMOUNT
             claim.TotalAmount = claim.HoursWorked * claim.HourlyRate;
-
             claim.Attachments ??= new List<ClaimAttachment>();
 
+            // FILE UPLOAD
             if (FileUpload != null && FileUpload.Length > 0)
             {
                 var allowed = new[] { ".pdf", ".docx", ".xlsx" };
                 var ext = Path.GetExtension(FileUpload.FileName).ToLower();
+
                 if (!allowed.Contains(ext))
                 {
                     TempData["Error"] = "Only PDF, DOCX, and XLSX files are allowed.";
@@ -122,11 +123,26 @@ namespace PROG6212_POE.Controllers
                 });
             }
 
+            // SAVE CLAIM FIRST (as Pending)
             _context.Claims.Add(claim);
+            await _context.SaveChangesAsync();
+
+            // AUTOMATED VERIFICATION
+            bool hoursValid = claim.HoursWorked > 0 && claim.HoursWorked <= 180;
+            bool rateValid = claim.HourlyRate > 0 && claim.HourlyRate < 100;
+            bool amountValid = claim.TotalAmount < 10000;
+
+            if (hoursValid && rateValid && amountValid)
+                claim.Status = ClaimStatus.Verified;   
+            else
+                claim.Status = ClaimStatus.ManualReview;  
+            // UPDATE claim
+            _context.Claims.Update(claim);
             await _context.SaveChangesAsync();
 
             TempData["Message"] = "Claim submitted successfully!";
             return RedirectToAction("LecturerDashboard");
         }
+
     }
 }

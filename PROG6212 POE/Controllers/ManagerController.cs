@@ -16,7 +16,6 @@ namespace PROG6212_POE.Controllers
             _context = context;
         }
 
-        // Role check helper
         private IActionResult CheckRole()
         {
             int? userId = HttpContext.Session.GetInt32("UserID");
@@ -31,7 +30,6 @@ namespace PROG6212_POE.Controllers
             return null;
         }
 
-        // Display all claims
         public async Task<IActionResult> ManagerDashboard()
         {
             var roleCheck = CheckRole();
@@ -46,7 +44,6 @@ namespace PROG6212_POE.Controllers
 
             return View(claims);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> ApproveClaim(int id)
@@ -63,7 +60,6 @@ namespace PROG6212_POE.Controllers
             return RedirectToAction(nameof(ManagerDashboard));
         }
 
-
         [HttpPost]
         public async Task<IActionResult> RejectClaim(int id)
         {
@@ -78,6 +74,5 @@ namespace PROG6212_POE.Controllers
 
             return RedirectToAction(nameof(ManagerDashboard));
         }
-
     }
 }

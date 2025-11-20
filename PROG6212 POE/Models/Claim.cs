@@ -10,7 +10,8 @@ namespace PROG6212_POE.Models
         Pending,
         Verified,
         Approved,
-        Rejected
+        Rejected,
+        ManualReview
     }
 
     public class Claim

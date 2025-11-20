@@ -37,15 +37,13 @@ namespace PROG6212_POE.Controllers
 
             var pendingClaims = await _context.Claims
                 .Include(c => c.User)
-                .Where(c => c.Status == ClaimStatus.Pending)
+                .Where(c => c.Status == ClaimStatus.Pending || c.Status == ClaimStatus.ManualReview)
                 .OrderByDescending(c => c.DateSubmitted)
                 .ToListAsync();
 
             return View(pendingClaims);
         }
 
-
-       
         [HttpPost]
         public async Task<IActionResult> VerifyClaim(int id)
         {
