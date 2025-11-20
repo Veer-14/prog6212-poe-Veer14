@@ -14,14 +14,14 @@ namespace PROG6212_POE.Controllers
             _context = context;
         }
 
-        // GET: Login page
+  
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
-        // POST: Login
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(User model)
@@ -38,7 +38,7 @@ namespace PROG6212_POE.Controllers
 
             try
             {
-                // Step 1: Check if the email exists
+               
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
 
                 if (user == null)
@@ -47,18 +47,18 @@ namespace PROG6212_POE.Controllers
                     return View(model);
                 }
 
-                // Step 2: Compare password (plain text for now)
+               
                 if (user.Password != model.Password)
                 {
                     TempData["Error"] = $"ERROR 102: Password does not match. Entered: '{model.Password}', Stored: '{user.Password}'";
                     return View(model);
                 }
 
-                // Step 3: Set session variables
+              
                 HttpContext.Session.SetInt32("UserID", user.UserID);
                 HttpContext.Session.SetString("UserRole", user.Role.ToString());
 
-                // Step 4: Redirect based on role
+            
                 switch (user.Role)
                 {
                     case UserRole.Lecturer:
@@ -80,13 +80,13 @@ namespace PROG6212_POE.Controllers
             }
             catch (Exception ex)
             {
-                // Step 5: Log exception and show error
+                
                 TempData["Error"] = $"ERROR 500: Unexpected exception: {ex.Message}";
                 return View(model);
             }
         }
 
-        // Logout
+    
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();

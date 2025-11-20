@@ -21,14 +21,14 @@ namespace PROG6212_POE.Controllers
             _context = context;
         }
 
-        // HR Dashboard - list all users
+        
         public async Task<IActionResult> HRDashboard()
         {
             var users = await _context.Users.ToListAsync();
-            return View(users); // Make sure the view name is HRDashboard.cshtml
+            return View(users); 
         }
 
-        // Add new user
+        
         public IActionResult AddUser()
         {
             return View();
@@ -46,7 +46,7 @@ namespace PROG6212_POE.Controllers
             return RedirectToAction("HRDashboard");
         }
 
-        // Edit user
+       
         public async Task<IActionResult> EditUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -66,7 +66,6 @@ namespace PROG6212_POE.Controllers
             return RedirectToAction("HRDashboard");
         }
 
-        // Generate Report (example: list of lecturers)
         public async Task<IActionResult> GenerateReport()
         {
             var approvedClaims = await _context.Claims
@@ -75,7 +74,7 @@ namespace PROG6212_POE.Controllers
                 .OrderBy(c => c.User.LastName)
                 .ToListAsync();
 
-            // Build PDF document
+
             var pdfBytes = Document.Create(document =>
             {
                 document.Page(page =>
@@ -91,7 +90,7 @@ namespace PROG6212_POE.Controllers
 
                     page.Content().Table(table =>
                     {
-                        // Columns
+                 
                         table.ColumnsDefinition(columns =>
                         {
                             columns.RelativeColumn(2);
@@ -101,7 +100,7 @@ namespace PROG6212_POE.Controllers
                             columns.RelativeColumn(2);
                         });
 
-                        // Header row
+                       
                         table.Header(header =>
                         {
                             header.Cell().Text("Lecturer").Bold();
@@ -111,7 +110,7 @@ namespace PROG6212_POE.Controllers
                             header.Cell().Text("Total Amount").Bold();
                         });
 
-                        // Data rows
+                      
                         foreach (var claim in approvedClaims)
                         {
                             table.Cell().Text($"{claim.User.FirstName} {claim.User.LastName}");

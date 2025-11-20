@@ -123,11 +123,11 @@ namespace PROG6212_POE.Controllers
                 });
             }
 
-            // SAVE CLAIM FIRST (as Pending)
+        
             _context.Claims.Add(claim);
             await _context.SaveChangesAsync();
 
-            // AUTOMATED VERIFICATION
+          
             bool hoursValid = claim.HoursWorked > 0 && claim.HoursWorked <= 180;
             bool rateValid = claim.HourlyRate > 0 && claim.HourlyRate < 100;
             bool amountValid = claim.TotalAmount < 10000;
@@ -136,7 +136,7 @@ namespace PROG6212_POE.Controllers
                 claim.Status = ClaimStatus.Verified;   
             else
                 claim.Status = ClaimStatus.ManualReview;  
-            // UPDATE claim
+            
             _context.Claims.Update(claim);
             await _context.SaveChangesAsync();
 

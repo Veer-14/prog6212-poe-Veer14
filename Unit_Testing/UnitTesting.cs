@@ -10,7 +10,7 @@ using PROG6212_POE.Models;
 
 namespace PROG6212_POE.Tests
 {
-    // Minimal test ISession implementation so controllers that rely on HttpContext.Session work
+    
     public class TestSession : ISession
     {
         private readonly Dictionary<string, byte[]> _store = new Dictionary<string, byte[]>();
