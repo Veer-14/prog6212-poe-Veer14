@@ -43,10 +43,11 @@
                                 <td>@claim.TotalAmount.ToString("C")</td>
                                 <td>@claim.Status</td>
                                 <td>
-                                    <form asp-controller="Coordinator" asp-action="ApproveClaim" method="post" style="display:inline;">
+                                    <form asp-controller="Coordinator" asp-action="VerifyClaim" method="post" style="display:inline;">
                                         <input type="hidden" name="id" value="@claim.ClaimID" />
-                                        <button type="submit" class="dashboard-btn btn-approve">Approve</button>
+                                        <button type="submit" class="dashboard-btn btn-approve">Verify</button>
                                     </form>
+
 
                                     <form asp-controller="Coordinator" asp-action="RejectClaim" method="post" style="display:inline;">
                                         <input type="hidden" name="id" value="@claim.ClaimID" />

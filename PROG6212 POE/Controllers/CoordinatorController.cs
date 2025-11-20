@@ -44,8 +44,10 @@ namespace PROG6212_POE.Controllers
             return View(pendingClaims);
         }
 
+
+       
         [HttpPost]
-        public async Task<IActionResult> ApproveClaim(int id)
+        public async Task<IActionResult> VerifyClaim(int id)
         {
             var roleCheck = CheckRole();
             if (roleCheck != null) return roleCheck;
@@ -53,7 +55,7 @@ namespace PROG6212_POE.Controllers
             var claim = await _context.Claims.FindAsync(id);
             if (claim == null) return NotFound();
 
-            claim.Status = ClaimStatus.Approved;
+            claim.Status = ClaimStatus.Verified;
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(CoordinatorDashboard));

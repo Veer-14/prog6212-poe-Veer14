@@ -40,11 +40,13 @@ namespace PROG6212_POE.Controllers
             var claims = await _context.Claims
                 .Include(c => c.User)
                 .Include(c => c.Attachments)
+                .Where(c => c.Status == ClaimStatus.Verified)
                 .OrderByDescending(c => c.DateSubmitted)
                 .ToListAsync();
 
             return View(claims);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> ApproveClaim(int id)
@@ -61,6 +63,7 @@ namespace PROG6212_POE.Controllers
             return RedirectToAction(nameof(ManagerDashboard));
         }
 
+
         [HttpPost]
         public async Task<IActionResult> RejectClaim(int id)
         {
@@ -75,5 +78,6 @@ namespace PROG6212_POE.Controllers
 
             return RedirectToAction(nameof(ManagerDashboard));
         }
+
     }
 }

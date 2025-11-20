@@ -8,6 +8,7 @@ namespace PROG6212_POE.Models
     public enum ClaimStatus
     {
         Pending,
+        Verified,
         Approved,
         Rejected
     }
