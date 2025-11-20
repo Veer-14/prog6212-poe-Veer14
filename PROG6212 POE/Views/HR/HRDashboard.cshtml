@@ -1,0 +1,126 @@
+﻿@model IEnumerable<PROG6212_POE.Models.User>
+
+@{
+    ViewData["Title"] = "HR Dashboard";
+}
+
+<div class="home-container">
+    <div class="center-content text-center">
+        <h1 class="title mb-4">HR Dashboard</h1>
+
+        <div class="mb-3">
+            <a asp-action="AddUser" class="dashboard-btn">+ Add New User</a>
+            <a asp-action="GenerateReport" class="dashboard-btn">Generate Report</a>
+        </div>
+
+        <table class="table table-dark table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Hourly Rate</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td>@user.Email</td>
+                        <td>@user.Role</td>
+                        <td>@user.HourlyRate</td>
+                        <td>
+                            <a asp-action="EditUser" asp-route-id="@user.UserID" class="dashboard-btn">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #4b6cb7);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+    }
+
+    @@keyframes gradientBG {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .home-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100%;
+        padding: 50px 20px;
+    }
+
+    .center-content {
+        width: 100%;
+        max-width: 900px;
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 25px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    }
+
+    .title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-btn {
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border: 2px solid #fff;
+        border-radius: 12px;
+        background-color: rgba(255,255,255,0.1);
+        color: #fff;
+        cursor: pointer;
+        text-decoration: none;
+        margin: 0 5px;
+        transition: all 0.3s ease;
+    }
+
+        .dashboard-btn:hover {
+            background-color: #fff;
+            color: #0f0c29;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+    table {
+        width: 100%;
+        color: #fff;
+    }
+</style>
+

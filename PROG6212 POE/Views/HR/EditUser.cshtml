@@ -1,0 +1,154 @@
+﻿@model PROG6212_POE.Models.User
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<div class="home-container">
+    <div class="center-content text-center">
+        <h1 class="title mb-4">Edit User</h1>
+
+        <form asp-action="EditUser" method="post" class="mx-auto" style="max-width: 600px; text-align: left;">
+            <input type="hidden" asp-for="UserID" />
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-white">First Name</label>
+                <input asp-for="FirstName" class="form-control input-field" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-white">Last Name</label>
+                <input asp-for="LastName" class="form-control input-field" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-white">Email</label>
+                <input asp-for="Email" type="email" class="form-control input-field" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-white">Password</label>
+                <input asp-for="Password" type="password" class="form-control input-field" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-white">Role</label>
+                <select asp-for="Role" class="form-control input-field" asp-items="Html.GetEnumSelectList<PROG6212_POE.Models.UserRole>()"></select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-white">Hourly Rate</label>
+                <input asp-for="HourlyRate" type="number" class="form-control input-field" />
+                <span asp-validation-for="HourlyRate" class="text-danger"></span>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="dashboard-btn">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #4b6cb7);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+    }
+
+    @@keyframes gradientBG {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .home-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100%;
+        padding: 50px 20px;
+    }
+
+    .center-content {
+        width: 100%;
+        max-width: 700px;
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 25px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    }
+
+    .title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-btn {
+        font-size: 16px;
+        font-weight: bold;
+        padding: 12px 25px;
+        border: 2px solid #fff;
+        border-radius: 12px;
+        background-color: rgba(255,255,255,0.1);
+        color: #fff;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+        .dashboard-btn:hover {
+            background-color: #fff;
+            color: #0f0c29;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+    .input-field {
+        border: 2px solid #fff;
+        border-radius: 10px;
+        background-color: rgba(255,255,255,0.1);
+        color: #fff;
+        transition: 0.3s;
+        padding: 8px;
+    }
+
+        .input-field:focus {
+            outline: none;
+            background-color: rgba(255,255,255,0.2);
+            box-shadow: 0 0 8px #fff;
+        }
+
+    label {
+        color: #ddd;
+    }
+
+    .text-danger {
+        color: #ff6b6b;
+    }
+</style>
+

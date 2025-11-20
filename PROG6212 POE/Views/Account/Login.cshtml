@@ -1,0 +1,145 @@
+﻿@model PROG6212_POE.Models.User
+
+@{
+    ViewData["Title"] = "User Login";
+}
+
+<div class="home-container">
+    <div class="center-content text-center">
+
+        <!-- Title -->
+        <h1 class="title mb-4">User Login</h1>
+
+        <!-- Display TempData messages -->
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger mb-3" role="alert">
+                <strong>Login Error:</strong> @TempData["Error"]
+            </div>
+        }
+
+        <!-- Login Form -->
+        <form asp-action="Login" method="post" class="mx-auto" style="max-width: 400px; text-align: left;">
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-white">Email Address</label>
+                <input asp-for="Email" type="email" class="form-control input-field" placeholder="Enter your email" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-white">Password</label>
+                <input asp-for="Password" type="password" class="form-control input-field" placeholder="Enter your password" required />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center mt-4">
+                <button type="submit" class="dashboard-btn">Login</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #4b6cb7);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+    }
+
+    @@keyframes gradientBG {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .home-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100%;
+        padding: 50px 20px;
+    }
+
+    .center-content {
+        width: 100%;
+        max-width: 450px;
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 25px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    }
+
+    .title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .dashboard-btn {
+        font-size: 18px;
+        font-weight: bold;
+        padding: 12px 30px;
+        border: 2px solid #fff;
+        border-radius: 15px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+        .dashboard-btn:hover {
+            background-color: #fff;
+            color: #0f0c29;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+    .input-field {
+        border: 2px solid #fff;
+        border-radius: 10px;
+        background-color: rgba(255,255,255,0.1);
+        color: #fff;
+        transition: 0.3s;
+        padding: 10px;
+    }
+
+        .input-field:focus {
+            outline: none;
+            background-color: rgba(255,255,255,0.2);
+            box-shadow: 0 0 8px #fff;
+        }
+
+    label {
+        color: #ddd;
+    }
+
+    .alert {
+        border-radius: 10px;
+        font-weight: 500;
+    }
+</style>

@@ -1,0 +1,186 @@
+﻿@model IEnumerable<PROG6212_POE.Models.Claim>
+
+@{
+    ViewData["Title"] = "Coordinator Dashboard";
+}
+
+<div class="home-container">
+    <div class="center-content">
+
+        <!-- Back Button -->
+        <div class="text-center mb-4">
+            <a asp-controller="HomePage" asp-action="Index" class="dashboard-btn">← Back</a>
+        </div>
+
+        <!-- Page Title -->
+        <h1 class="title">Coordinator Dashboard</h1>
+        <h2 class="subtitle">Pending Claims</h2>
+
+        <!-- Claims Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered text-center align-middle shadow rounded-table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Claim ID</th>
+                        <th>Date Submitted</th>
+                        <th>Hours Worked</th>
+                        <th>Hourly Rate</th>
+                        <th>Total Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var claim in Model)
+                        {
+                            <tr>
+                                <td>@claim.ClaimID</td>
+                                <td>@claim.DateSubmitted.ToString("dd MMM yyyy")</td>
+                                <td>@claim.HoursWorked</td>
+                                <td>@claim.HourlyRate</td>
+                                <td>@claim.TotalAmount.ToString("C")</td>
+                                <td>@claim.Status</td>
+                                <td>
+                                    <form asp-controller="Coordinator" asp-action="ApproveClaim" method="post" style="display:inline;">
+                                        <input type="hidden" name="id" value="@claim.ClaimID" />
+                                        <button type="submit" class="dashboard-btn btn-approve">Approve</button>
+                                    </form>
+
+                                    <form asp-controller="Coordinator" asp-action="RejectClaim" method="post" style="display:inline;">
+                                        <input type="hidden" name="id" value="@claim.ClaimID" />
+                                        <button type="submit" class="dashboard-btn btn-reject">Reject</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-muted">No pending claims available.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #4b6cb7);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+    }
+
+    @@keyframes gradientBG {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .home-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100%;
+        padding: 50px 20px;
+    }
+
+    .center-content {
+        width: 100%;
+        max-width: 1200px;
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 25px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    }
+
+    .title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #fff;
+    }
+
+    .subtitle {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+        color: #ddd;
+    }
+
+    .dashboard-btn {
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border: 2px solid #fff;
+        border-radius: 10px;
+        background-color: white;
+        color: black;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 5px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .dashboard-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+    .btn-approve:hover {
+        color: limegreen !important;
+        border-color: limegreen;
+    }
+
+    .btn-reject:hover {
+        color: red !important;
+        border-color: red;
+    }
+
+    table.table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+        background-color: rgba(255,255,255,0.9);
+        color: black;
+    }
+
+        table.table th, table.table td {
+            padding: 12px;
+            font-size: 15px;
+        }
+
+    .table-dark {
+        background-color: rgba(0,0,0,0.8);
+        color: #fff;
+    }
+
+    table.table tr:hover {
+        background-color: rgba(255,255,255,0.2);
+        color: black;
+        transition: 0.3s;
+    }
+
+    .rounded-table {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+</style>

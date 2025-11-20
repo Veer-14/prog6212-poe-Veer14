@@ -1,0 +1,146 @@
+﻿\@{
+ViewData["Title"] = "Home Page";
+var userId = Context.Session.GetInt32("UserID");
+var userRole = Context.Session.GetString("UserRole");
+}
+
+<div class="home-container">
+    <!-- Top-right Login/Logout Button -->
+    <div class="top-right-login">
+        @if (userId != null)
+        {
+            <!-- Logout Button -->
+            <form asp-controller="Account" asp-action="Logout" method="post">
+                <button type="submit" class="dashboard-btn">Logout</button>
+            </form>
+        }
+        else
+        {
+            <!-- Login Button -->
+            <form asp-controller="Account" asp-action="Login" method="get">
+                <button type="submit" class="dashboard-btn">Login</button>
+            </form>
+        }
+    </div>
+
+    <div class="center-content">
+        <h1 class="title">CMCS Dashboard</h1>
+
+        <!-- Lecturer Dashboard -->
+        @if (userRole == "Lecturer")
+        {
+            <form asp-controller="Lecturer" asp-action="LecturerDashboard" method="get" class="dashboard-btn-form">
+                <button type="submit" class="dashboard-btn">Lecturer Dashboard</button>
+            </form>
+        }
+
+        <!-- Coordinator Dashboard -->
+        @if (userRole == "Coordinator")
+        {
+            <form asp-controller="Coordinator" asp-action="CoordinatorDashboard" method="get" class="dashboard-btn-form">
+                <button type="submit" class="dashboard-btn">Coordinator Dashboard</button>
+            </form>
+        }
+
+        <!-- Manager Dashboard -->
+        @if (userRole == "Manager")
+        {
+            <form asp-controller="Manager" asp-action="ManagerDashboard" method="get" class="dashboard-btn-form">
+                <button type="submit" class="dashboard-btn">Manager Dashboard</button>
+            </form>
+        }
+
+        <!-- HR Dashboard -->
+       
+            <form asp-controller="HR" asp-action="HRDashboard" method="get" class="dashboard-btn-form">
+                <button type="submit" class="dashboard-btn">HR Dashboard</button>
+            </form>
+        
+    </div>
+</div>
+
+<style>
+    /* Full screen gradient background with subtle animation */
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(-45deg, #1e1e1e, #2c2c2c, #3a3a3a, #1e1e1e);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        position: relative;
+    }
+
+    @@keyframes gradientBG {
+        0%
+
+    {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+
+    }
+
+    .home-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .top-right-login {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .center-content {
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 50px;
+        border-radius: 25px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    }
+
+    .title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 50px;
+        letter-spacing: 1px;
+    }
+
+    .dashboard-btn-form {
+        margin-bottom: 20px;
+    }
+
+    .dashboard-btn {
+        width: 250px;
+        padding: 15px 0;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 2px solid #fff;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .dashboard-btn:hover {
+            background-color: #fff;
+            color: #1e1e1e;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+</style>

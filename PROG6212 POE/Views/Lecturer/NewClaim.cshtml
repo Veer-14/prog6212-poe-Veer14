@@ -1,0 +1,180 @@
+﻿@model PROG6212_POE.Models.Claim
+
+@{
+    ViewData["Title"] = "Create New Claim";
+}
+
+<div class="home-container">
+    <div class="center-content text-center">
+
+        <!-- Back Button -->
+        <div class="text-center mb-4">
+            <a asp-controller="Lecturer" asp-action="LecturerDashboard" class="dashboard-btn">← Back</a>
+        </div>
+
+        <!-- Title -->
+        <h1 class="title mb-4">Create New Claim</h1>
+
+        <!-- Form -->
+        <form asp-action="NewClaim" method="post" enctype="multipart/form-data" class="mx-auto" style="max-width: 600px; text-align: left;">
+
+            <!-- Claim Month -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-white">Claim Month</label>
+                <input asp-for="ClaimMonth" type="text" class="form-control input-field" placeholder="e.g., October 2025" required />
+                <span asp-validation-for="ClaimMonth" class="text-danger"></span>
+            </div>
+
+            <!-- Hours Worked -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-white">Hours Worked</label>
+                <input asp-for="HoursWorked" id="HoursWorked" type="number" class="form-control input-field" placeholder="Enter hours worked" required />
+                <span asp-validation-for="HoursWorked" class="text-danger"></span>
+            </div>
+
+            <!-- Hidden Hourly Rate (comes from user profile) -->
+            <input asp-for="HourlyRate" id="HourlyRate" type="hidden" value="@ViewBag.HourlyRate" />
+
+            <!-- Total Amount (Auto-calculated) -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-white">Total Amount (R)</label>
+                <input id="TotalAmount" type="text" class="form-control input-field" readonly />
+            </div>
+
+            <!-- Notes -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-white">Notes</label>
+                <textarea asp-for="Notes" class="form-control input-field" placeholder="Enter additional notes (optional)"></textarea>
+            </div>
+
+            <!-- File Upload -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold text-white">Upload Supporting Document (Optional)</label>
+                <input type="file" class="form-control input-field" name="FileUpload" />
+                <small class="text-light">Accepted: .pdf, .docx, .xlsx (Max 5MB)</small>
+            </div>
+
+            <!-- Submit -->
+            <div class="text-center mt-4">
+                <button type="submit" class="dashboard-btn">Submit Claim</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <!-- Auto calculation script -->
+    <script>
+        $(document).ready(function () {
+            $("#HoursWorked").keyup(function () {
+                var hours = parseFloat($(this).val());
+                var rate = parseFloat($("#HourlyRate").val());
+                if (!isNaN(hours) && !isNaN(rate)) {
+                    $("#TotalAmount").val((hours * rate).toFixed(2));
+                }
+            });
+        });
+    </script>
+}
+
+<style>
+    
+
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #4b6cb7);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+    }
+
+    @@keyframes gradientBG {
+        0%
+
+    {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+
+    }
+
+    .home-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100%;
+        padding: 50px 20px;
+    }
+
+    .center-content {
+        width: 100%;
+        max-width: 700px;
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 25px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    }
+
+    .title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-btn {
+        font-size: 18px;
+        font-weight: bold;
+        padding: 12px 30px;
+        border: 2px solid #fff;
+        border-radius: 15px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .dashboard-btn:hover {
+            background-color: #fff;
+            color: #0f0c29;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+    .input-field {
+        border: 2px solid #fff;
+        border-radius: 10px;
+        background-color: rgba(255,255,255,0.1);
+        color: #fff;
+        transition: 0.3s;
+    }
+
+        .input-field:focus {
+            outline: none;
+            background-color: rgba(255,255,255,0.2);
+            box-shadow: 0 0 8px #fff;
+        }
+
+    label, small {
+        color: #ddd;
+    }
+
+    .alert {
+        border-radius: 10px;
+        font-weight: 500;
+    }
+</style>
