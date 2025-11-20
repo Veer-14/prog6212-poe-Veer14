@@ -33,7 +33,7 @@
             </div>
 
             <!-- Hidden Hourly Rate (comes from user profile) -->
-            <input asp-for="HourlyRate" id="HourlyRate" type="hidden" value="@ViewBag.HourlyRate" />
+            <input asp-for="HourlyRate" id="HourlyRate" type="hidden" />
 
             <!-- Total Amount (Auto-calculated) -->
             <div class="mb-3">
@@ -68,15 +68,22 @@
     <!-- Auto calculation script -->
     <script>
         $(document).ready(function () {
-            $("#HoursWorked").keyup(function () {
-                var hours = parseFloat($(this).val());
+
+            function updateTotal() {
+                var hours = parseFloat($("#HoursWorked").val());
                 var rate = parseFloat($("#HourlyRate").val());
                 if (!isNaN(hours) && !isNaN(rate)) {
                     $("#TotalAmount").val((hours * rate).toFixed(2));
+                } else {
+                    $("#TotalAmount").val("");
                 }
-            });
+            }
+
+            // Update when typing
+            $("#HoursWorked").on("input", updateTotal);
         });
     </script>
+
 }
 
 <style>
