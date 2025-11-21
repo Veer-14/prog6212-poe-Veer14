@@ -37,7 +37,6 @@ namespace PROG6212_POE.Tests
         public bool TryGetValue(string key, out byte[] value) => _store.TryGetValue(key, out value);
     }
 
-    // Helper to create an In-Memory AppDbContext for tests
     public static class TestHelper
     {
         public static AppDbContext CreateInMemoryContext(string dbName = null)
@@ -204,7 +203,7 @@ namespace PROG6212_POE.Tests
             {
                 UserID = 1,
                 ClaimMonth = "December 2025",
-                HoursWorked = 200, // exceeds 180
+                HoursWorked = 200, 
                 HourlyRate = 100M
             };
 
